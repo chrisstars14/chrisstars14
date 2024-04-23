@@ -1,0 +1,50 @@
+
+public class ImageMerge {
+
+    public static void main(String[] args) {
+        try {
+            // Charger les deux images à fusionner
+            BufferedImage image1 = ImageIO.read(new File("image1.jpg"));
+            BufferedImage image2 = ImageIO.read(new File("image2.jpg"));
+            
+            // Créer une nouvelle image contenant les deux images combinées
+            int width = image1.getWidth() + image2.getWidth();
+            int height = Math.max(image1.getHeight(), image2.getHeight());
+            BufferedImage mergedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+            
+            // Dessiner les deux images sur la nouvelle image
+            Graphics g = mergedImage.getGraphics();
+            g.drawImage(image1, 0, 0, null);
+            g.drawImage(image2, image1.getWidth(), 0, null);
+            g.dispose();
+            
+            // Enregistrer l'image fusionnée
+            ImageIO.write(mergedImage, "png", new File("mergedImage.png"));
+            
+            System.out.println("Les images ont été fusionnées avec succès.");
+        } catch (Exception e) {
+            System.out.println("Une erreur s'est produite lors de la fusion des images.");
+            e.printStackTrace();
+        }
+    }
+}
+```
+```java
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+
+public class ImageMerge {
+
+    public static BufferedImage mergeImages(BufferedImage image1, BufferedImage image2) {
+        int width = image1.getWidth() + image2.getWidth();
+        int height = Math.max(image1.getHeight(), image2.getHeight());
+        BufferedImage mergedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        
+        Graphics g = mergedImage.getGraphics();
+        g.drawImage(image1, 0, 0, null);
+        g.drawImage(image2, image1.getWidth(), 0, null);
+        g.dispose();
+        
+        return mergedImage;
+    }
+}
